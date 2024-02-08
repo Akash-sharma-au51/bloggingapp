@@ -1,9 +1,15 @@
 import React from 'react'
+import logo from '../logo.png'
+import "../styles/footer.css"
 
 const Footer = () => {
   return (
     <div>
-      <h1>footer</h1>
+      <footer>
+        <img src={logo} alt="" />
+        <span> made with ❤️ by akash sharma</span>
+      </footer>
+      
     </div>
   )
 }
