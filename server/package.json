@@ -4,7 +4,8 @@
   "description": "bloging app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon index.js",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,13 @@
   },
   "homepage": "https://github.com/Akash-sharma-au51/bloggingapp#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mysql": "^2.18.1"
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.0.3"
   }
 }
