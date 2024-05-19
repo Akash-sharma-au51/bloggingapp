@@ -1,14 +1,19 @@
-const {createpost,findpostsbytitle,getallposts,updatedata,deleteddata} = require("../controller/postController")
+const express = require('express');
+const {
+    createPost,
+    findPostsByTitle,
+    getAllPosts,
+    updateData,
+    deleteData
+} = require('../controller/postController');
 
-const express = require("express")
-
-const router = express.Router()
+const router = express.Router();
 
 
-router.post("/create",createpost)
-router.get("/findbytitle",findpostsbytitle)
-router.get("/",getallposts)
-router.put("/update",updatedata)
-router.delete("/delete",deleteddata)
+router.post('/create', createPost);
+router.get('/findbytitle/:title', findPostsByTitle); 
+router.get('/', getAllPosts);
+router.put('/update', updateData);
+router.delete('/delete', deleteData);
 
-module.exports = router
+module.exports = router;

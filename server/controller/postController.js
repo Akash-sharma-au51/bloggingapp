@@ -1,120 +1,122 @@
-const Posts = require("../model/postModel");
+const Posts = require('../model/postModel');
 
-const createpost = async (req, res) => {
+// Create a new post
+const createPost = async (req, res) => {
     const { title, description, author, image } = req.body;
     if (!description || !author) {
         return res.status(400).json({
-            message: "please provide description and author"
+            message: 'Please provide description and author'
         });
     }
     try {
-        let post = await Posts.create({
-            title,
-            description,
-            author,
-            image
-        });
+        const post = await Posts.create({ title, description, author, image });
         res.status(201).json({
-            message: "post created successfully",
+            message: 'Post created successfully',
             post
         });
     } catch (error) {
         res.status(500).json({
-            message: "internal server error",
+            message: 'Internal server error',
             error: error.message
         });
     }
 };
 
-// Find all posts
-const getallposts = async (req, res) => {
+// Get all posts
+const getAllPosts = async (req, res) => {
     try {
-        let posts = await Posts.find();
+        const posts = await Posts.find();
         res.status(200).json({
-            message: "posts fetched successfully",
+            message: 'Posts fetched successfully',
             posts
         });
     } catch (error) {
         res.status(500).json({
-            message: "internal server error",
+            message: 'Internal server error',
             error: error.message
         });
     }
 };
 
 // Find post by title
-const findpostsbytitle = async (req, res) => {
+const findPostsByTitle = async (req, res) => {
+    const { title } = req.params;
     try {
-        const { title } = req.params;
         const post = await Posts.findOne({ title });
         if (!post) {
             return res.status(404).json({
-                message: "Cannot find the post with this title"
+                message: 'Cannot find the post with this title'
             });
         }
         res.status(200).json({
-            message: "post fetched successfully",
+            message: 'Post fetched successfully',
             post
         });
     } catch (error) {
         res.status(500).json({
-            message: "internal server error",
+            message: 'Internal server error',
             error: error.message
         });
     }
 };
 
-// Update data
-const updatedata = async (req, res) => {
+// Update post data
+const updateData = async (req, res) => {
+    const { id, updatedData } = req.body;
+    if (!id || !updatedData) {
+        return res.status(400).json({
+            message: 'ID and updated data must be provided'
+        });
+    }
     try {
-        const { id, updateddata } = req.body;
-        if (!id) {
-            return res.status(400).json({
-                message: "data not found"
-            });
-        }
-        const record = await Posts.findByIdAndUpdate(id, updateddata, { new: true });
-        if (!record) {
+        const updatedPost = await Posts.findByIdAndUpdate(id, updatedData, { new: true });
+        if (!updatedPost) {
             return res.status(404).json({
-                message: "Post not found"
+                message: 'Post not found'
             });
         }
         res.status(200).json({
-            message: "post updated successfully",
-            post: record
+            message: 'Post updated successfully',
+            post: updatedPost
         });
     } catch (error) {
         res.status(500).json({
-            message: "internal server error",
+            message: 'Internal server error',
             error: error.message
         });
     }
 };
 
-// Delete data
-const deleteddata = async (req, res) => {
+// Delete post
+const deleteData = async (req, res) => {
+    const { id } = req.body;
+    if (!id) {
+        return res.status(400).json({
+            message: 'ID must be provided'
+        });
+    }
     try {
-        const { id } = req.body;
-        if (!id) {
-            return res.status(400).json({
-                message: "can't find the id"
-            });
-        }
-        const deletedata = await Posts.findByIdAndDelete(id);
-        if (!deletedata) {
+        const deletedPost = await Posts.findByIdAndDelete(id);
+        if (!deletedPost) {
             return res.status(404).json({
-                message: "Post not found"
+                message: 'Post not found'
             });
         }
         res.status(200).json({
-            message: "deleted successfully"
+            message: 'Post deleted successfully'
         });
     } catch (error) {
         res.status(500).json({
-            message: "internal server error",
+            message: 'Internal server error',
             error: error.message
         });
     }
 };
 
-module.exports = { createpost, updatedata, deleteddata, findpostsbytitle, getallposts };
+module.exports = {
+    createPost,
+    getAllPosts,
+    findPostsByTitle,
+    updateData,
+    deleteData
+};
